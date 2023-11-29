@@ -1,3 +1,4 @@
+<?php include("connect.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +11,24 @@
     <center>
         <div class="container">
             <h1>List Mobil</h1>
-
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nama Mobil</th>
+                        <th scope="col">Brand Mobil</th>
+                        <th scope="col">Warna Mobil</th>
+                        <th scope="col">Tipe Mobil</th>
+                        <th scope="col">Harga Mobil</th>
+                        <th scope="col">Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
             <?php
-            include("connect.php");
+            
 
             // Buatlah query untuk mengambil data dari database (gunakan query SELECT)
-
-            
+            $query = mysqli_query($connect, "SELECT * FROM showroom_mobil");
             
 
             // Buatlah perkondisian dimana: 
@@ -27,15 +39,27 @@
             // 2. Apabila tidak ada data dalam database, maka outputnya adalah pesan 'tidak ada data dalam tabel'
 
             //<!--  **********************  1  **************************     -->
-
             
-            
-
-
-
-
-
-
+            if ($query) {
+                while ($row = mysqli_fetch_assoc($query)) {
+                    $id = $row['id'];
+                    $nama_mobil = $row['nama_mobil'];
+                    $brand_mobil = $row['brand_mobil'];
+                    $warna_mobil = $row['warna_mobil'];
+                    $tipe_mobil =  $row['tipe_mobil'];
+                    $harga_mobil = $row['harga_mobil'];
+                    echo '<tr>
+                    <th scope="row">' . $id . '</th>
+                    
+                    <td>' . $nama_mobil .'</td>
+                    <td>'. $brand_mobil .'</td>
+                    <td>' . $warna_mobil .'</td>
+                    <td>' . $tipe_mobil .'</td>
+                    <td>' . $harga_mobil .'</td>
+                    <td><a href="form_detail_mobil.php?id=' . $id .'">LINK</a></td>
+                    </tr>';
+                }
+            }
 
             //<!--  **********************  1  **************************     -->
 
@@ -48,6 +72,8 @@
             
             //<!--  **********************  2  **************************     -->
             ?>
+                </tbody>
+            </table>
         </div>
     </center>
 </body>
